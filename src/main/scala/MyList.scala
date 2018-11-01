@@ -69,5 +69,8 @@ object MyList {
     foldLeft(reverse(as),z)((a,b) => f(b,a))
 
   def append[A](a1: MyList[A], a2: MyList[A]): MyList[A] =
-    foldLeft(a1,a2)((_,x) => Cons[A](x,a2))
+    foldRightAsLeft(a1,a2)((x,l) => l match {
+      case Nil => Cons[A](x,a2)
+      case l => Cons[A](x,l)
+    })
 }
