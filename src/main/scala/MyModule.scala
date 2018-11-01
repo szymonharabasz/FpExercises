@@ -1,4 +1,4 @@
-import fpinscala.datastrcutures.MyList
+import fpinscala.datastrcutures.{Nil, Cons, MyList}
 
 object MyModule {
 
@@ -57,5 +57,27 @@ object MyModule {
 
     println("-> Exercise 3.6:")
     println(MyList.init(MyList(1, 2, 3, 4)))
+
+    println("-> Exercise 3.8")
+    println( MyList.foldRight(MyList(1,2,3), Nil:MyList[Int])(Cons(_,_)) )
+
+    println("-> Exercise 3.9")
+    println(MyList.length(MyList(1,2,3,4,5)))
+
+    println("-> Exercise 3.11")
+    println(MyList.sumLeft(MyList(1,2,3,4,5)))
+    println(MyList.productLeft(MyList(1,2,3,4,5)))
+    println(MyList.lengthLeft(MyList(1,2,3,4,5)))
+
+    println("-> Exercise 3.12")
+    println(MyList.reverse(MyList(1,2,3,4,5)))
+
+    println("-> Exercise 3.13")
+    println(MyList.foldLeft(MyList("1","2","3","4","5"),"")(_+_))
+    println(MyList.foldRight(MyList("1","2","3","4","5"),"")(_+_))
+    println(MyList.foldRightAsLeft(MyList("1","2","3","4","5"),"")(_+_))
+
+    println("-> Exercise 3.14")
+    println(MyList.append(MyList(1,2,3),MyList(4,5,6)))
   }
 }

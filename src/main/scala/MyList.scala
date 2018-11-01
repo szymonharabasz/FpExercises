@@ -39,16 +39,35 @@ object MyList {
     loop(l, 1)
   }
 
-  def init[A](l: MyList[A]): MyList[A] = {
-   // TODO: make it work
-   // @annotation.tailrec
-    def loop(l: MyList[A]): MyList[A] = l match {
-      case Nil => Nil
-      case Cons(a, Cons(_, Nil)) => Cons(a, Nil)
-      case Cons(a, t) => Cons(a, loop(t))
-    }
-
-    loop(l)
+  def init[A](l: MyList[A]): MyList[A] = l match {
+    case Nil => Nil
+    case Cons(a, Cons(_, Nil)) => Cons(a, Nil)
+    case Cons(a, t) => Cons(a, init(t))
   }
 
+  def foldRight[A,B](as: MyList[A], z: B)(f: (A,B) => B): B =
+    as match {
+      case Nil => z
+      case Cons(x, xs) => f(x, foldRight(xs, z)(f))
+    }
+
+  @annotation.tailrec
+  def foldLeft[A,B](as: MyList[A], z: B)(f: (B,A) => B): B = as match {
+      case Nil => z
+      case Cons(x, xs) => foldLeft(xs, f(z,x))(f)
+  }
+
+  def length[A](as: MyList[A]): Int = foldRight(as, 0)((_,y) => 1 + y)
+
+  def sumLeft[A](as: MyList[Int]) = foldLeft(as,0)(_+_)
+  def productLeft[A](as: MyList[Int]) = foldLeft(as,1)(_*_)
+  def lengthLeft[A](as: MyList[Int]) = foldLeft(as,0)((x,_) => x + 1)
+
+  def reverse[A](as: MyList[A]): MyList[A] = foldLeft(as, Nil:MyList[A])((b:MyList[A],a:A) => Cons(a,b))
+
+  def foldRightAsLeft[A,B](as: MyList[A], z: B)(f: (A,B) => B): B =
+    foldLeft(reverse(as),z)((a,b) => f(b,a))
+
+  def append[A](a1: MyList[A], a2: MyList[A]): MyList[A] =
+    foldLeft(a1,a2)((_,x) => Cons[A](x,a2))
 }
