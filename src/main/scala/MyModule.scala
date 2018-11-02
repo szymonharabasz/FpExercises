@@ -1,4 +1,4 @@
-import fpinscala.datastrcutures.{Nil, Cons, MyList}
+import fpinscala.datastrcutures.{Nil, Cons, MyList, Leaf, Branch, MyTree}
 
 object MyModule {
 
@@ -25,11 +25,11 @@ object MyModule {
   }
 
   // Exercise 2.3
-  def curry[A,B,C](f: (A, B) => C): A => (B => C) = (a) => ((b) => f(a, b))
+  def curry[A,B,C](f: (A, B) => C): A => B => C = a => b => f(a, b)
   // Exercise 2.4
   def uncurry[A,B,C](f: A => B => C): (A, B) => C = (a, b) => f(a)(b)
   // Exercise 2.5
-  def compose[A,B,C](f: B => C, g: A => B): A => C = (a) => f(g(a))
+  def compose[A,B,C](f: B => C, g: A => B): A => C = a => f(g(a))
 
   def main(args: Array[String]): Unit = {
     println("Run exercises :")
@@ -52,7 +52,7 @@ object MyModule {
     println(MyList.drop(MyList(1, 2, 3, 4), 5))
 
     println("-> Exercise 3.5:")
-    println(MyList.dropWhile(MyList(1, 2, 3, 4), (a: Int) => (a <= 3)))
+    println(MyList.dropWhile(MyList(1, 2, 3, 4), (a: Int) => a <= 3))
     println(MyList.dropWhile(MyList(1, 2, 3, 4), (_: Int) => true))
 
     println("-> Exercise 3.6:")
@@ -79,5 +79,39 @@ object MyModule {
 
     println("-> Exercise 3.14")
     println(MyList.append(MyList(1,2,3),MyList(4,5,6)))
+
+    println("-> Exercise 3.15")
+    println(MyList.concat(MyList(MyList(1,2,3),MyList(4,5,6),MyList(7,8))))
+
+    println("-> Exercise 3.16")
+    println(MyList.addOne(MyList(1,2,3)))
+
+    println("-> Exercise 3.17")
+    println(MyList.stringify(MyList(1.2,2.3,3.4)))
+
+    println("-> Exercise 3.18")
+    println(MyList.addOne(MyList(1,2,3)) == MyList.addOne2(MyList(1,2,3)))
+    println(MyList.stringify(MyList(1.2,2.3,3.4)) == MyList.stringify2(MyList(1.2,2.3,3.4)))
+
+    println("-> Exercise 3.19")
+    println(MyList.filterEven(MyList(1,2,3,4,5)))
+
+    println("-> Exercise 3.20")
+    println(MyList.flatMap(MyList(1,2,3))(i => MyList(i,i)))
+
+    println("-> Exercise 3.21")
+    println(MyList.filterEven2(MyList(1,2,3,4,5)))
+
+    println("-> Exercise 3.22")
+    println(MyList.addElements(MyList(1,2,3), MyList(4,5,6,7)))
+
+    println("-> Exercise 3.23")
+    println(MyList.addElements2(MyList(1,2,3), MyList(4,5,6,7)) == MyList.addElements(MyList(1,2,3), MyList(4,5,6,7)))
+
+    println("-> Exercise 3.25")
+    println(MyTree.size(Branch(Branch(Leaf(3),Leaf(2)),Leaf(4))))
+
+    println("-> Exercise 3.26")
+    println(MyTree.max(Branch(Branch(Leaf(3),Leaf(4)),Leaf(3))))
   }
 }
