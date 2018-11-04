@@ -89,4 +89,9 @@ class MyListTest extends FunSuite {
   test("-> Exercise 3.23") {
     assert(MyList.addElements2(MyList(1, 2, 3), MyList(4, 5, 6, 7)) == MyList.addElements(MyList(1, 2, 3), MyList(4, 5, 6, 7)))
   }
+
+  test("-> Exercise 3.24") {
+    assert(MyList.hasSubsequence(MyList(1,2,3,4,5,6), MyList(2,3,4)))
+    assert(!MyList.hasSubsequence(MyList(1,2,3,4,5,6), MyList(2,1,3)))
+  }
 }

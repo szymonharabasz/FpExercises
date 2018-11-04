@@ -122,4 +122,19 @@ object MyList {
 
   def addElements2(a1: MyList[Int], a2: MyList[Int]): MyList[Int] = zipWith(a1,a2)(_+_)
 
+  def startsWith[A](sup: MyList[A], sub: MyList[A]): Boolean = (sup, sub) match {
+    case (Nil, Nil) => true
+    case (_, Nil) => true
+    case (Nil, _) => false
+    case (Cons(h1, t1), Cons(h2, t2)) =>
+      if (h1 != h2) false
+      else startsWith(t1, t2)
+  }
+
+  def hasSubsequence[A](sup: MyList[A], sub: MyList[A]): Boolean = sup match {
+    case Nil => false
+    case Cons(_, t) =>
+      if (startsWith(sup, sub)) true
+      else hasSubsequence(t, sub)
+  }
 }
