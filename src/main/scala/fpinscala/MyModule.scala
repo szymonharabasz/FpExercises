@@ -1,4 +1,4 @@
-import fpinscala.datastrcutures.{Nil, Cons, MyList, Leaf, Branch, MyTree}
+package fpinscala
 
 object MyModule {
 

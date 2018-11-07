@@ -36,4 +36,30 @@ class OptionTest extends FunSuite {
   test("-> Exercise 4.1 filter None returns None") {
     assert(None.filter(_ => true) == None)
   }
+  test("-> Exercise 4.1 map selects Option(Stringp) for Option[Employee]") {
+    case class Employee(name: String, department: String)
+    val joe = Some(Employee("joe", "IT"))
+    assert(joe.map(_.department) == Some("IT"))
+  }
+  test("-> Exercise 4.1 map selects None as department of None Employee") {
+    case class Employee(name: String, department: String)
+    val joe:Option[Employee] = None
+    assert(joe.map(_.department) == None)
+  }
+  test("-> Exercise 4.2 variance calculates correct value") (
+    assert(Option.variance(Seq(2.0,3.0,4.0)) == Some(2.0/3))
+  )
+  test("-> Exercise 4.3 lift works") {
+    val absO: Option[Double] => Option[Double] = Option.lift(math.abs)
+    assert(absO(Some(-4.0)) == Some(4.0))
+  }
+  test("Exercise 4.3 map2 works for two existing arguments") {
+    assert(Option.map2(Some(2), Some(4))(_+_) == Some(6))
+  }
+  test("Exercise 4.3 returns None for one of arguments None") {
+    assert(Option.map2(Some(2), None)(_+_) == None)
+  }
+
+
+
 }
