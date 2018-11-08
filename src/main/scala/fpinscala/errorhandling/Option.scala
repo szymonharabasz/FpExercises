@@ -34,19 +34,7 @@ object Option {
 
   def lift[A, B](f: A => B): Option[A] => Option[B] = _ map f
 
-  def map2[A, B, C](a: Option[A], b: Option[B])(f: (A, B) => C): Option[C] = {
-    val g = ((x:A) => f(x,b))
-    val h = (x1:B) => ((x2:A) => f(x2,x1))
-    val y = b.map(h)
-    None
-  }
+  def map2[A, B, C](a: Option[A], b: Option[B])(f: (A, B) => C): Option[C] = a.flatMap((x1:A) => b.map(x2 => f(x1,x2)))
 
-    /*
-    def map2[A, B, C](a: Option[A], b: Option[B])(f: (A, B) => C): Option[C] = (a, b) match {
-      case (None, _) => None
-      case (_, None) => None
-      case (Some(x), Some(y)) => Some(f(x, y))
-    }
-    */
 }
 
