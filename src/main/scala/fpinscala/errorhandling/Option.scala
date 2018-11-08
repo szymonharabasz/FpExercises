@@ -36,8 +36,16 @@ object Option {
   def map2[A, B, C](a: Option[A], b: Option[B])(f: (A, B) => C): Option[C] = a.flatMap((x1:A) => b.map(x2 => f(x1,x2)))
 
   def sequence[A](a: MyList[Option[A]]): Option[MyList[A]] = a match {
-    case fpinscala.datastrcutures.Nil => Some(fpinscala.datastrcutures.Nil:MyList[A])
+    case Nil => Some(Nil:MyList[A])
     case Cons(a:Option[A], t) => Some(Cons(a.getOrElse(return None), sequence(t) getOrElse(return None)))
   }
+
+  def traverse[A, B](a: MyList[A])(f: A => Option[B]): Option[MyList[B]] = a match {
+    case Nil => Some(Nil:MyList[B])
+    case Cons(a, t:MyList[A]) =>
+      Some(Cons(f(a).getOrElse(return None), traverse(t)(f).getOrElse(return None)):MyList[B])
+  }
+
+  def sequence_trav[A](a: MyList[Option[A]]): Option[MyList[A]] = traverse(a)((x:Option[A]) => x)
 }
 

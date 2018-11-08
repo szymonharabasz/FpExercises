@@ -66,6 +66,12 @@ class OptionTest extends FunSuite {
   test("Exercise 4.4 sequence returns None for list containing None") {
     assert( Option.sequence(MyList(Some(2), None, Some(4))) == None )
   }
+  test("Exercise 4.5 sequence_trav on MyList[Option[Int]] returns Option[MyList[Int] if there is no None") {
+    assert( Option.sequence_trav(MyList(Some(2), Some(3), Some(4))) == Some(MyList(2,3,4)) )
+  }
+  test("Exercise 4.5 sequence_trav returns None for list containing None") {
+    assert( Option.sequence_trav(MyList(Some(2), None, Some(4))) == None )
+  }
 
 
 }
