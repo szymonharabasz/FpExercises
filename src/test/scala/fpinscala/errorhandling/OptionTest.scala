@@ -1,5 +1,6 @@
 package fpinscala.errorhandling
 
+import fpinscala.datastrcutures.MyList
 import org.scalatest.FunSuite
 
 class OptionTest extends FunSuite {
@@ -59,7 +60,12 @@ class OptionTest extends FunSuite {
   test("Exercise 4.3 returns None for one of arguments None") {
     assert(Option.map2(Some(2), None)(_+_) == None)
   }
-
+  test("Exercise 4.4 sequence on MyList[Option[Int]] returns Option[MyList[Int] if there is no None") {
+    assert( Option.sequence(MyList(Some(2), Some(3), Some(4))) == Some(MyList(2,3,4)) )
+  }
+  test("Exercise 4.4 sequence returns None for list containing None") {
+    assert( Option.sequence(MyList(Some(2), None, Some(4))) == None )
+  }
 
 
 }

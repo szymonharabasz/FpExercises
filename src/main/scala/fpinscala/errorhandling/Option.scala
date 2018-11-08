@@ -1,8 +1,7 @@
 package fpinscala.errorhandling
 
 //hide std library `Option` and `Either`, since we are writing our own in this chapter
-import fpinscala.MyModule
-import fpinscala.MyModule._
+import fpinscala.datastrcutures.{Cons, MyList, Nil}
 
 import scala.{Either => _, Option => _, _}
 
@@ -36,5 +35,9 @@ object Option {
 
   def map2[A, B, C](a: Option[A], b: Option[B])(f: (A, B) => C): Option[C] = a.flatMap((x1:A) => b.map(x2 => f(x1,x2)))
 
+  def sequence[A](a: MyList[Option[A]]): Option[MyList[A]] = a match {
+    case fpinscala.datastrcutures.Nil => Some(fpinscala.datastrcutures.Nil:MyList[A])
+    case Cons(a:Option[A], t) => Some(Cons(a.getOrElse(return None), sequence(t) getOrElse(return None)))
+  }
 }
 
