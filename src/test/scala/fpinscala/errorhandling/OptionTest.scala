@@ -57,7 +57,7 @@ class OptionTest extends FunSuite {
   test("Exercise 4.3 map2 works for two existing arguments") {
     assert(Option.map2(Some(2), Some(4))(_+_) == Some(6))
   }
-  test("Exercise 4.3 returns None for one of arguments None") {
+  test("Exercise 4.3 map2 returns None for one of arguments None") {
     assert(Option.map2(Some(2), None)(_+_) == None)
   }
   test("Exercise 4.4 sequence on MyList[Option[Int]] returns Option[MyList[Int] if there is no None") {
