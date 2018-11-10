@@ -1,5 +1,6 @@
 package fpinscala.errorhandling
 
+import fpinscala.datastrcutures.MyList
 import org.scalatest.FunSuite
 
 class EitherTest extends FunSuite {
@@ -30,4 +31,13 @@ class EitherTest extends FunSuite {
   test("Exercise 4.3 map2 returns second operand if its Left") {
     assert(Right(2).map2(Left(4))(_+_) == Left(4))
   }
+  test("Exercise 4.5 sequence on MyList[Right[Int],Right[Int],...] returns Right[MyList[Int] " +
+    "if there is no Left") {
+    assert( Either.sequence(MyList(Right(2), Right(3), Right(4))) == Right(MyList(2,3,4)) )
+  }
+  test("Exercise 4.5 sequence on MyList[Right[Int],Left[Int],...] returns Left[Int] " +
+    "if there is some Left") {
+    assert( Either.sequence(MyList(Right(2), Left(3), Right(4))) == Left(3) )
+  }
+
 }
