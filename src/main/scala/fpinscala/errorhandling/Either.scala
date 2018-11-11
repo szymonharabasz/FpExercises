@@ -16,24 +16,11 @@ sealed trait Either[+E, +A] {
   def map[B](f: A => B): Either[E, B] = flatMap(a => Right(f(a)))
 
   def map2[EE >: E, B, C](b: Either[EE, B])(f: (A, B) => C) = {
-    this.flatMap((x1: A) => b.map(x2 => f(x1, x2)))
+    flatMap((x1: A) => b.map(x2 => f(x1, x2)))
   }
 }
 
 object Either {
-  /*
-  def traverse[E, A, B](as: MyList[A])(f: A => Either[E, B]): Either[E, MyList[B]] = as match {
-    case Nil => Right(Nil:MyList[B])
-    case Cons(Right(a), t:MyList[A]) => f(a) match {
-      case Right(x) => traverse(t)(f) match {
-        case Right(y) => Right(Cons(x, y))
-        case Left(y) => Left(y)
-      }
-      case Left(x) => Left(x)
-    }
-    case Cons(Left(e), _) => Left(e)
-  }
-  */
   def traverse[E, A, B](as: MyList[A])(f: A => Either[E, B]): Either[E, MyList[B]] = as match {
     case Nil => Right(Nil:MyList[B])
     case Cons(a, t) => f(a) match {
