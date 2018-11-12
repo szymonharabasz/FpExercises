@@ -35,7 +35,6 @@ object EitherList {
       case m => LeftList[A](x,m)
     })
   def traverse[E, A, B](as: MyList[A])(f: A => EitherList[E, B]): EitherList[E, MyList[B]] = as match {
-
     case Nil => RightList(Nil:MyList[B])
     case Cons(a, t) => (f(a), traverse(t)(f)) match {
       case (LeftList(e1,t1), LeftList(e2,t2)) => EitherList.append(LeftList(e1,t1),LeftList(e2,t2))
