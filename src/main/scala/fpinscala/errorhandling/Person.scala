@@ -50,7 +50,6 @@ object Person {
     else RightList(new Age(age))
 
   def mkPerson(name: String, age: Int): EitherList[String, Person] = {
-    println("--> " + mkName(name))
     mkName(name).map2(mkAge(age))(Person(_,_))
   }
 }
