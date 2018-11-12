@@ -20,4 +20,10 @@ class StreamTest extends FunSuite {
   test("-> Exercise 5.2 drop(6) returns empty Stream if the input is shorter") {
     assert(Stream(1,2,3,4,5).drop(6).toList == Nil)
   }
+  test("-> Exercise 5.3 takeWhile returns elements smaller than 3") {
+    assert(Stream(1,2,3,4,5).takeWhile(_ < 3).toList == Stream(1,2).toList)
+  }
+  test("-> Exercise 5.2 takeWhile returns empty list if condition never fulfilled") {
+    assert(Stream(1,2,3,4,5).takeWhile(_ < 0).toList == Nil)
+  }
 }
