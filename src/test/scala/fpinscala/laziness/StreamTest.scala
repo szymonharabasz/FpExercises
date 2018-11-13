@@ -23,7 +23,20 @@ class StreamTest extends FunSuite {
   test("-> Exercise 5.3 takeWhile returns elements smaller than 3") {
     assert(Stream(1,2,3,4,5).takeWhile(_ < 3).toList == Stream(1,2).toList)
   }
-  test("-> Exercise 5.2 takeWhile returns empty list if condition never fulfilled") {
+  test("-> Exercise 5.3 takeWhile returns empty list if condition never fulfilled") {
     assert(Stream(1,2,3,4,5).takeWhile(_ < 0).toList == Nil)
   }
+  test("-> Exercise 5.4 forAll returns true if the condition is fulfilled for all elements") {
+    assert(Stream(2,4,6,8).forAll(_ % 2 == 0) == true)
+  }
+  test("-> Exercise 5.4 forAll returns false if the condition is not fulfilled some element") {
+    assert(Stream(2,4,5,8).forAll(_ % 2 == 0) == false)
+  }
+  test("-> Exercise 5.3 takeWhile2 returns elements smaller than 3") {
+    assert(Stream(1,2,3,4,5).takeWhile2(_ < 3).toList == Stream(1,2).toList)
+  }
+  test("-> Exercise 5.3 takeWhile2 returns empty list if condition never fulfilled") {
+    assert(Stream(1,2,3,4,5).takeWhile2(_ < 0).toList == Nil)
+  }
+
 }
