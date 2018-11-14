@@ -50,4 +50,22 @@ class StreamTest extends FunSuite {
   test("=> Exercise 5.7 append returns merged Streams") {
     assert(Stream.append(Stream(1,2,3),Stream(4,5)).toList == Stream(1,2,3,4,5).toList)
   }
+  test("-> Exercise 5.8 constant(5).take(6) returns a stream of 6 5's") {
+    assert(Stream.constant(5).take(6).toList == MyList(5,5,5,5,5,5))
+  }
+  test("-> Exercise 5.9 from(5).take(6) returns a stream of 6 numbers from 5") {
+    assert(Stream.from(5).take(6).toList == MyList(5,6,7,8,9,10))
+  }
+  test("-> Exercise 5.12 constantUnfold(5).take(6) returns a stream of 6 5's") {
+    assert(Stream.constantUnfold(5).take(6).toList == MyList(5,5,5,5,5,5))
+  }
+  test("-> Exercise 5.12 onesUnfold().take(6) returns a stream of 6 1's") {
+    assert(Stream.onesUnfold().take(6).toList == MyList(1,1,1,1,1,1))
+  }
+  test("-> Exercise 5.12 fromUnfold(5).take(6) returns a stream of 6 numbers from 5") {
+    assert(Stream.fromUnfold(5).take(6).toList == MyList(5,6,7,8,9,10))
+  }
+  test("-> Exercise 5.12 fibsUnfold.take(6) returns 6 first Finonacci numbers") {
+    assert(Stream.fibsUnfold().take(9).toList == MyList(0,1,1,2,3,5,8,13,21))
+  }
 }

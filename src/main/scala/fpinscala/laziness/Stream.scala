@@ -36,6 +36,7 @@ sealed trait Stream[+A] {
   def flatMap[B](f: A => Stream[B]): Stream[B] = foldRight(Stream.empty:Stream[B])(
     (a, b) => Stream.append(f(a),b)
   )
+
 }
 case object Empty extends Stream[Nothing]
 case class Cons[+A](h: () => A, t: () => Stream[A]) extends Stream[A]
@@ -57,4 +58,16 @@ object Stream {
       case a => Stream.cons(a1,a)
     }
   )
+  def constant[A](a: A): Stream[A] = cons(a, constant(a))
+  def from(n: Int): Stream[Int] = cons(n, from(n+1))
+  def unfold[A, S](z: S)(f: S => Option[(A, S)]): Stream[A] = {
+    f(z) match {
+      case None => empty
+      case Some((a,s)) => cons(a, unfold(s)(f))
+    }
+  }
+  def constantUnfold[A](a: A): Stream[A] = unfold(1)(_ => Some((a,0)))
+  def fromUnfold(n: Int): Stream[Int] = unfold(n)(a => Some(a,a+1))
+  def onesUnfold(): Stream[Int] = constantUnfold(1)
+  def fibsUnfold(): Stream[Int] = unfold((0,1))(s => Some(s._1,(s._2,s._1+s._2)))
 }
