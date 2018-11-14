@@ -109,14 +109,12 @@ object MyList {
   def filterEven2(ns: MyList[Int]): MyList[Int] = filter2(ns)(_ % 2 == 0)
 
   def addElements(a1: MyList[Int], a2: MyList[Int]): MyList[Int] = (a1, a2) match {
-    case (_, Nil) => Nil
-    case (Nil, _) => Nil
+    case (_, Nil) | (Nil, _) => Nil
     case (Cons(h1,t1), Cons(h2,t2)) => Cons(h1+h2, addElements(t1,t2))
   }
 
   def zipWith[A](a1: MyList[A], a2: MyList[A])(f: (A, A) => A): MyList[A] = (a1, a2) match {
-    case (_, Nil) => Nil
-    case (Nil, _) => Nil
+    case (_, Nil) | (Nil, _) => Nil
     case (Cons(h1,t1), Cons(h2,t2)) => Cons(f(h1,h2), zipWith(t1,t2)(f))
   }
 

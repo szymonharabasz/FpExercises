@@ -68,4 +68,25 @@ class StreamTest extends FunSuite {
   test("-> Exercise 5.12 fibsUnfold.take(6) returns 6 first Finonacci numbers") {
     assert(Stream.fibsUnfold().take(9).toList == MyList(0,1,1,2,3,5,8,13,21))
   }
+  test("-> Exercise 5.13 takeUnfold(3) return the first 3 elements of longer Stream") {
+    assert(Stream(1,2,3,4,5).take(3).toList == Stream(1,2,3).toList)
+  }
+  test("-> Exercise 5.13 takeUnfold(6) return the full Stream if it's shorter") {
+    assert(Stream(1,2,3,4,5).take(6).toList == Stream(1,2,3,4,5).toList)
+  }
+  test("-> Exercise 5.13 mapUnfold maps all elements of the stream") {
+    assert(Stream(1,2,3,4).mapUnfold(_*2).toList == MyList(2,4,6,8))
+  }
+  test("-> Exercise 5.13 takeWhileUnfold returns elements smaller than 3") {
+    assert(Stream(1,2,3,4,5).takeWhile2(_ < 3).toList == Stream(1,2).toList)
+  }
+  test("-> Exercise 5.13 takeWhileUnfold returns empty list if condition never fulfilled") {
+    assert(Stream(1,2,3,4,5).takeWhile2(_ < 0).toList == Nil)
+  }
+  test("-> Exercise 5.13 zipWith returns zipped Stream") {
+    assert(Stream.zipWith(Stream(1,2,3,4), Stream(6,5,4))(_+_).toList == MyList(7,7,7))
+  }
+  test("-> Exercise 5.14 startsWith return true if longer Stream starts with shorter one") {
+    assert(Stream(1,2,3,4,5).startsWith(Stream(1,2)))
+  }
 }
