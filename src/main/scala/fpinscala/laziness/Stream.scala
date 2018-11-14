@@ -33,11 +33,8 @@ sealed trait Stream[+A] {
   def filter(p: A => Boolean): Stream[A] = foldRight(Stream.empty:Stream[A])(
     (a:A, b) => if (p(a)) Stream.cons(a,b) else b
   )
-  def append(s: => Stream[A]): Stream[A] = foldRight(s)(
-    (s1,s2) => s2 match {
-      case Empty => Stream.cons(s1,s)
-      case a => Stream.cons(s1,a)
-    }
+  def flatMap[B](f: A => Stream[B]): Stream[B] = foldRight(Stream.empty:Stream[B])(
+    (a, b) => Stream.append(f(a),b)
   )
 }
 case object Empty extends Stream[Nothing]
@@ -53,4 +50,11 @@ object Stream {
 
   def apply[A](as: A*): Stream[A] =
     if (as.isEmpty) empty else cons(as.head, apply(as.tail: _*))
+
+  def append[A](s1: Stream[A], s2: Stream[A]): Stream[A] = s1.foldRight(s2)(
+    (a1,a2) => a2 match {
+      case Empty => Stream.cons(a1,s2)
+      case a => Stream.cons(a1,a)
+    }
+  )
 }

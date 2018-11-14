@@ -47,7 +47,7 @@ class StreamTest extends FunSuite {
   test("-> Exercise 5.7 filter returns a Stream containing only elements that fulfill condition") {
     assert(Stream(1,2,3,4,5,6).filter(_%2 == 0).toList == Stream(2,4,6).toList)
   }
-  test("Exercise 5.7 append returns merged Streams") {
-    assert(true)
+  test("=> Exercise 5.7 append returns merged Streams") {
+    assert(Stream.append(Stream(1,2,3),Stream(4,5)).toList == Stream(1,2,3,4,5).toList)
   }
 }
