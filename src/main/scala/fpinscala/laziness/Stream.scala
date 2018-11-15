@@ -25,6 +25,13 @@ sealed trait Stream[+A] {
       case Cons(h, t) => f(h(), t().foldRight(z)(f))
       case _ => z
     }
+  /*
+  def foldLeft[B](z: B)(f: (B,A) => B): B = this match {
+    case Cons(h, t) => t().foldLeft(f(z,h()))(f)
+    case _ => z
+  }
+  def reverse[A]: Stream[A] = foldLeft(Empty:Stream[A])((b:Stream[A],a:A) => Cons(a,b))
+  */
   def exists(p: A => Boolean): Boolean = foldRight(false)((a,b) => p(a) || b)
   def forAll(p: A => Boolean): Boolean = !exists(!p(_))
   def takeWhile2(p: A => Boolean): Stream[A] = foldRight(Stream.empty:Stream[A])(
