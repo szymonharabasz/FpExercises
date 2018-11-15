@@ -50,7 +50,7 @@ sealed trait Stream[+A] {
   }
   def startsWith[A](s: Stream[A]): Boolean = Stream.unfold((this,s)) {
     case (Cons(h1, t1), Cons(h2, t2)) => Some( ( h1() == h2(), (t1(), t2()) ) )
-    case (Cons(_, _), Empty) => Some( ( false, (Empty, Empty) ) )
+    case (Empty, Cons(_, _)) => Some( ( false, (Empty, Empty) ) )
     case _ => None
   }.forAll(a => a)
 
