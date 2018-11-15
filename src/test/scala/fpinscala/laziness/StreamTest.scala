@@ -98,4 +98,7 @@ class StreamTest extends FunSuite {
   test("-> Exercise 5.14 startsWith returns false first Stream doesn't start with the secons one") {
     assert(!Stream(1,2,3,4,5).startsWith(Stream(3,4,5)))
   }
+  test("-> Exercise 5.15 tails return Stream of Streams being tails of the caller") {
+    assert(Stream(1,2,3).tails.mapUnfold(_.toList).toList == MyList(MyList(1,2,3), MyList(2,3), MyList(3)))
+  }
 }
