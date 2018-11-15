@@ -86,7 +86,16 @@ class StreamTest extends FunSuite {
   test("-> Exercise 5.13 zipWith returns zipped Stream") {
     assert(Stream.zipWith(Stream(1,2,3,4), Stream(6,5,4))(_+_).toList == MyList(7,7,7))
   }
-  test("-> Exercise 5.14 startsWith return true if longer Stream starts with shorter one") {
+  test("-> Exercise 5.14 startsWith returns true if longer Stream starts with shorter one") {
     assert(Stream(1,2,3,4,5).startsWith(Stream(1,2)))
+  }
+  test("-> Exercise 5.14 startsWith returns true if Streams are the same") {
+    assert(Stream(1,2,3,4,5).startsWith(Stream(1,2,3,4,5)))
+  }
+  test("-> Exercise 5.14 startsWith returns false if the first Stream is shorter") {
+    assert(!Stream(1,2,3).startsWith(Stream(1,2,3,4,5)))
+  }
+  test("-> Exercise 5.14 startsWith returns false first Stream doesn't start with the secons one") {
+    assert(!Stream(1,2,3,4,5).startsWith(Stream(3,4,5)))
   }
 }
