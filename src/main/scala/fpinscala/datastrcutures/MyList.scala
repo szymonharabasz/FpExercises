@@ -135,4 +135,8 @@ object MyList {
       if (startsWith(sup, sub)) true
       else hasSubsequence(t, sub)
   }
+
+  def fill[A](n: Int)(a: A): MyList[A] = {
+    if (n == 0) Nil else Cons(a, fill(n-1)(a))
+  }
 }

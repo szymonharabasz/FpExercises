@@ -65,21 +65,29 @@ object RNG {
     (f(a1,a2), rng2)
   }
   def sequence[A](fs: MyList[Rand[A]]): Rand[MyList[A]] = fs match {
-    case Cons(h:Rand[A], t:List[Rand[A]]) => rnd => {
+    case Cons(h:Rand[A], t:MyList[Rand[A]]) => rnd => {
       val (ha, rnd1) = h(rnd)
       val (ta:MyList[A], rnd2) = sequence(t)(rnd1)
       (Cons(ha, ta),rnd2)
     }
+    case _ => rnd => (Nil, rnd)
   }
-
+  def intsViaSequence(count: Int)(rng: RNG): (MyList[Int], RNG) =
+    sequence[Int](MyList.fill(count)(_.nextInt))(rng)
+  def flatMap[A,B](f: Rand[A])(g: A => Rand[B]): Rand[B] = rnd => {
+    val (a, rnd1) = f(rnd)
+    g(a)(rnd1)
+  }
+  
   def main(args: Array[String]) = {
-    println(s"${Int.MinValue} ${Int.MaxValue}")
     val r1 = new SimpleRNG(42)
     val (d2, r2) = nextDouble(r1)
     println(d2)
     val (d3, r3) = nextDouble(r2)
     println(d3)
     val (l4, r4) = ints(10)(r3)
-   // println(l4)
+    val (l5, r5) = intsViaSequence(10)(r3)
+    println(l4)
+    println(l5)
   }
 }
