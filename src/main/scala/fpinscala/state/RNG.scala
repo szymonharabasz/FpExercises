@@ -78,7 +78,16 @@ object RNG {
     val (a, rnd1) = f(rnd)
     g(a)(rnd1)
   }
-  
+  def nonNegativeLessThan(max: Int): Rand[Int] =
+      flatMap(nonNegativeInt){ i =>
+        val mod = i % max
+        if (i + (max-1) - mod >= 0) unit(mod) else nonNegativeLessThan(max)
+      }
+  def mapViaFlatMap[A,B](s: Rand[A])(f: A => B): Rand[B] =
+    flatMap(s)(a => unit(f(a)))
+  def map2viaFlatMap[A,B,C](ra: Rand[A], rb: Rand[B])(f: (A, B) => C): Rand[C] =
+    flatMap(ra)(a => flatMap(rb)(b => unit(f(a,b))))
+
   def main(args: Array[String]) = {
     val r1 = new SimpleRNG(42)
     val (d2, r2) = nextDouble(r1)
